@@ -26,10 +26,10 @@ column_config_dict = {
     'pitch_grade': st.column_config.NumberColumn("Pitch Grade", format="%.0f")
 }
 
-styled_df = df.to_pandas().style.background_gradient(subset=['tj_stuff_plus'], cmap='viridis')
+styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style.background_gradient(subset=['tj_stuff_plus'], cmap='viridis')
 
 
-st.dataframe(styled_df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']],
+st.dataframe(styled_df,
                 hide_index=True,
                 column_config=column_config_dict,
                 width=1500)

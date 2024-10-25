@@ -6,7 +6,7 @@ import polars as pl
 from datetime import date
 
 # Load data
-df = pl.read_csv("tjstuff_plus_pitch_data_2024")
+df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv")
 
 
 column_config_dict = {

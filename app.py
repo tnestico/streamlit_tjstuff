@@ -21,8 +21,8 @@ column_config_dict = {
     'pitcher_name': 'Pitcher Name',
     'pitch_type': 'Pitch Type',
     'pitches': 'Pitches',
-    'tj_stuff_plus': st.column_config.NumberColumn("tjStuff+", format="%.0f%"),
-    'pitch_grade': st.column_config.NumberColumn("Pitch Grade", format="%.0f%")
+    'tj_stuff_plus': st.column_config.NumberColumn("tjStuff+", format=".0f"),
+    'pitch_grade': st.column_config.NumberColumn("Pitch Grade", format=".0f")
 }
 
 

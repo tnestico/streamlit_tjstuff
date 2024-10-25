@@ -8,7 +8,7 @@ from datetime import date
 # Load data
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
 df = df.drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
-df = df.sort(['pitcher_name','tj_stuff_plus'], descending=[False,True])
+df = df.sort(['pitcher_name','pitcher_type'], descending=[False,False])
 
 # df = df.with_columns([
 #     pl.col('tj_stuff_plus').cast(pl.Int64).alias('tj_stuff_plus'),

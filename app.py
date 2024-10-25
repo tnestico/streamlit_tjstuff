@@ -6,7 +6,7 @@ import polars as pl
 from datetime import date
 
 # Load data
-df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv")
+df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
 df = df.drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
 
 

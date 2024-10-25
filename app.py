@@ -4,6 +4,7 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 import requests
 import polars as pl
 from datetime import date
+import pandas as pd
 
 # Load data
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
@@ -25,10 +26,10 @@ column_config_dict = {
     'pitch_grade': st.column_config.NumberColumn("Pitch Grade", format="%.0f")
 }
 
+styled_df = pd.style.background_gradient(subset=['tj_stuff_plus'], cmap='viridis')
 
 
-
-st.dataframe(df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']],
+st.dataframe(styled_df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']],
                 hide_index=True,
                 column_config=column_config_dict,
                 width=1500)

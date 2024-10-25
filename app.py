@@ -7,6 +7,7 @@ from datetime import date
 
 # Load data
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv")
+df = df.drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
 
 
 df = df.with_columns([

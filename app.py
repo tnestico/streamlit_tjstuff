@@ -33,8 +33,8 @@ column_config_dict = {
 
 styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style
 
-styled_df = styled_df.background_gradient(subset=['tj_stuff_plus'], cmap='cmap_sum',vmin=85,vmax=115)
-styled_df = styled_df.background_gradient(subset=['pitch_grade'], cmap='cmap_sum',vmin=20,vmax=80)
+styled_df = styled_df.background_gradient(subset=['tj_stuff_plus'], cmap=cmap_sum,vmin=85,vmax=115)
+styled_df = styled_df.background_gradient(subset=['pitch_grade'], cmap=cmap_sum,vmin=20,vmax=80)
 
 
 st.dataframe(styled_df,

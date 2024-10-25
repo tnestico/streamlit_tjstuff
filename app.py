@@ -9,12 +9,12 @@ from datetime import date
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv")
 
 
-df['tj_stuff_plus'] = df['tj_stuff_plus'].cast(pl.Int64)
-df['pitches'] = df['pitches'].cast(pl.Int64)
-df['pitcher_id'] = df['pitcher_id'].cast(pl.Int64)
-df['pitch_grade'] = df['pitch_grade'].cast(pl.Int64)
-
-
+df = df.with_columns([
+    pl.col('tj_stuff_plus').cast(pl.Int64).alias('tj_stuff_plus'),
+    pl.col('pitches').cast(pl.Int64).alias('pitches'),
+    pl.col('pitcher_id').cast(pl.Int64).alias('pitcher_id'),
+    pl.col('pitch_grade').cast(pl.Int64).alias('pitch_grade')
+])
 column_config_dict = {
     'pitcher_id': 'Pitcher ID',
     'pitcher_name': 'Pitcher Name',

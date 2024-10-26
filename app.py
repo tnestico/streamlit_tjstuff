@@ -124,7 +124,7 @@ pitcher_id_name = st.selectbox('Select Pitcher', [x for x in pitcher_name_id_id]
 pitcher_id = pitcher_name_id_id[pitcher_id_name]
 # Define pitcher ID and position
 position = pitcher_id_position[pitcher_id]
-st.text(pitcher_id)
+st.text(pitcher_id_name)
 pitcher_name = pitcher_id_name[int(pitcher_id)]
 
 import tjstuff_plot

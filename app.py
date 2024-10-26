@@ -42,7 +42,7 @@ column_config_dict = {
 unique_pitch_types = df['pitch_type'].unique().to_list()
 
 # Initialize session state for selected pitch types
-if 'selected_pitch_types' not in st.session_state:
+if 'selected_pitch_types' in st.session_state:
     # Multiselect widget for pitch types
     selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types, default=st.session_state.selected_pitch_types)
 

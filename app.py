@@ -57,7 +57,12 @@ dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours]
 # Define a custom colormap for styling
 cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF','#FFFFFF','#FFB000',])
 
+# Initialize session state for cache status
+if 'cache_cleared' not in st.session_state:
+    st.session_state.cache_cleared = False
+
 # Load data from CSV file and preprocess it
+@st.cache_data
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
 df_plot = df.clone()
 df = df.filter(df['pitches']>=10).drop_nulls(subset=['pitch_grade','tj_stuff_plus'])

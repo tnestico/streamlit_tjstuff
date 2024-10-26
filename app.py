@@ -61,9 +61,14 @@ cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF','#
 if 'cache_cleared' not in st.session_state:
     st.session_state.cache_cleared = False
 
-# Load data from CSV file and preprocess it
+
+# Function to fetch data and cache it
 @st.cache_data
-df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
+def fetch_data():
+    df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
+    return df
+
+df = fetch_data()
 df_plot = df.clone()
 df = df.filter(df['pitches']>=10).drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
 df = df.sort(['pitcher_name','pitch_type'], descending=[False,False])

@@ -41,7 +41,7 @@ unique_pitch_types = ['']+sorted(df['pitch_type'].unique().to_list())
 selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types,default='')
 
 # Filter the DataFrame based on selected pitch types
-if selected_pitch_types:
+if selected_pitch_types != '':
     df = df.filter(pl.col('pitch_type')==selected_pitch_types)
 
 

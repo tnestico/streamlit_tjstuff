@@ -53,7 +53,7 @@ if 'selected_pitch_types' not in st.session_state:
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types:
     df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))
-    st.session_state.selected_pitch_types = selected_pitch_types
+    #st.session_state.selected_pitch_types = selected_pitch_types
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling
 styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style

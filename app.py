@@ -128,4 +128,6 @@ pitcher_name = pitcher_id_name[pitcher_id]
 
 import tjstuff_plot
 
+
+
 tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)

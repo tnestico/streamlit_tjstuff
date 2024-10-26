@@ -211,4 +211,5 @@ def tjstuff_plot(df:pl.DataFrame,
 
     # Adjust subplot layout
     fig.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
+    fig.set_facecolor('k')
     st.pyplot(fig)

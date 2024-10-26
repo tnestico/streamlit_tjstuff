@@ -92,9 +92,9 @@ selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types == 'All':
     df = df.filter(pl.col('pitch_type')=='All').sort('tj_stuff_plus', descending=True)
-
-elif selected_pitch_types != '':
+if selected_pitch_types != '':
     df = df.filter(pl.col('pitch_type')==dict_pitch_desc_type[selected_pitch_types]).sort('tj_stuff_plus', descending=True)
+
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling
 styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style
@@ -117,11 +117,12 @@ pitcher_id_position = dict(zip(df_plot['pitcher_id'],df_plot.drop_nulls(subset=[
 
 
 # Create a multiselect widget for pitch types
-pitcher_id = st.selectbox('Select Pitcher', [pitcher_name_id_id[x] for x in pitcher_name_id_id])
+pitcher_id_name = st.selectbox('Select Pitcher', [pitcher_name_id_id[x] for x in pitcher_name_id_id])
 
+pitcher_id = pitcher_name_id_id[pitcher_id_name]
 # Define pitcher ID and position
 position = pitcher_id_position[pitcher_id]
-pitcher_name = pitcher_name_id_id[pitcher_id]
+pitcher_name = pitcher_id_name_id[pitcher_id]
 
 import tjstuff_plot
 

@@ -102,7 +102,7 @@ selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types == 'All':
     df = df.filter(pl.col('pitch_type')=='All').sort('tj_stuff_plus', descending=True)
-if selected_pitch_types != '':
+elif selected_pitch_types != '':
     df = df.filter(pl.col('pitch_type')==dict_pitch_desc_type[selected_pitch_types]).sort('tj_stuff_plus', descending=True)
 
 

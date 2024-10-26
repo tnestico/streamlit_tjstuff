@@ -115,7 +115,7 @@ Filter and sort tjStuff+ Data for all MLB Pitchers
 """
            )
 # Create a selectbox widget for pitch types
-selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
+selected_pitch_types = st.selectbox('Select Pitch Types *(leave blank for all pitch types)*', unique_pitch_types)
 
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types == 'All':

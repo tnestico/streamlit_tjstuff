@@ -7,9 +7,7 @@ from datetime import date
 import pandas as pd
 import matplotlib
 
-
-# For help with plotting the pitch data, we will use the following dictionary to map pitch types to their corresponding colours
-### PITCH COLOURS ###
+# Dictionary to map pitch types to their corresponding colors and names
 pitch_colours = {
     ## Fastballs ##
     'FF': {'colour': '#FF007D', 'name': '4-Seam Fastball'},
@@ -40,27 +38,18 @@ pitch_colours = {
     'UN': {'colour': '#9C8975', 'name': 'Unknown'},
 }
 
-# Create a dictionary mapping pitch types to their colors
-dict_colour = dict(zip(pitch_colours.keys(), [pitch_colours[key]['colour'] for key in pitch_colours]))
-
-# Create a dictionary mapping pitch types to their colors
-dict_pitch = dict(zip(pitch_colours.keys(), [pitch_colours[key]['name'] for key in pitch_colours]))
-
-# Create a dictionary mapping pitch types to their colors
-dict_pitch_desc_type = dict(zip([pitch_colours[key]['name'] for key in pitch_colours],pitch_colours.keys()))
-
-
-# Create a dictionary mapping pitch types to their colors
-dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours], 
-                           [pitch_colours[key]['colour'] for key in pitch_colours]))
+# Create dictionaries for pitch types and their attributes
+dict_colour = {key: value['colour'] for key, value in pitch_colours.items()}
+dict_pitch = {key: value['name'] for key, value in pitch_colours.items()}
+dict_pitch_desc_type = {value['name']: key for key, value in pitch_colours.items()}
+dict_pitch_name = {value['name']: value['colour'] for key, value in pitch_colours.items()}
 
 # Define a custom colormap for styling
-cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF','#FFFFFF','#FFB000',])
+cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF', '#FFFFFF', '#FFB000'])
 
 # Initialize session state for cache status
 if 'cache_cleared' not in st.session_state:
     st.session_state.cache_cleared = False
-
 
 # Function to fetch data and cache it
 @st.cache_data
@@ -68,10 +57,11 @@ def fetch_data():
     df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
     return df
 
+# Fetch and preprocess data
 df = fetch_data()
 df_plot = df.clone()
-df = df.filter(df['pitches']>=10).drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
-df = df.sort(['pitcher_name','pitch_type'], descending=[False,False])
+df = df.filter(df['pitches'] >= 10).drop_nulls(subset=['pitch_grade', 'tj_stuff_plus'])
+df = df.sort(['pitcher_name', 'pitch_type'], descending=[False, False])
 
 # Cast columns to appropriate data types
 df = df.with_columns([
@@ -91,48 +81,40 @@ column_config_dict = {
     'pitch_grade': st.column_config.NumberColumn("Pitch Grade", format="%.0f")
 }
 
-
 # Get unique pitch types for selection
-unique_pitch_types = ['']+sorted(df['pitch_type'].unique().to_list())
-unique_pitch_types = [dict_pitch[x] if x in dict_pitch else x for x in unique_pitch_types]
+unique_pitch_types = [''] + sorted(df['pitch_type'].unique().to_list())
+unique_pitch_types = [dict_pitch.get(x, x) for x in unique_pitch_types]
 
-# Create a multiselect widget for pitch types
+# Create a selectbox widget for pitch types
 selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types == 'All':
-    df = df.filter(pl.col('pitch_type')=='All').sort('tj_stuff_plus', descending=True)
+    df = df.filter(pl.col('pitch_type') == 'All').sort('tj_stuff_plus', descending=True)
 elif selected_pitch_types != '':
-    df = df.filter(pl.col('pitch_type')==dict_pitch_desc_type[selected_pitch_types]).sort('tj_stuff_plus', descending=True)
-
+    df = df.filter(pl.col('pitch_type') == dict_pitch_desc_type[selected_pitch_types]).sort('tj_stuff_plus', descending=True)
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling
 styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style
 
 # Apply background gradient styling to specific columns
-styled_df = styled_df.background_gradient(subset=['tj_stuff_plus'], cmap=cmap_sum,vmin=80,vmax=120)
-styled_df = styled_df.background_gradient(subset=['pitch_grade'], cmap=cmap_sum,vmin=20,vmax=80)
+styled_df = styled_df.background_gradient(subset=['tj_stuff_plus'], cmap=cmap_sum, vmin=80, vmax=120)
+styled_df = styled_df.background_gradient(subset=['pitch_grade'], cmap=cmap_sum, vmin=20, vmax=80)
 
 # Display the styled DataFrame in Streamlit
-st.dataframe(styled_df,
-                hide_index=True,
-                column_config=column_config_dict,
-                width=1500)
+st.dataframe(styled_df, hide_index=True, column_config=column_config_dict, width=1500)
 
+# Create dictionaries for pitcher information
+pitcher_id_name = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name']))
+pitcher_id_name_id = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'].astype(str)))
+pitcher_name_id_id = dict(zip(df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'].astype(str), df_plot['pitcher_id']))
+pitcher_id_position = dict(zip(df_plot['pitcher_id'], df_plot.drop_nulls(subset=['position'])['position']))
 
+# Create a selectbox widget for pitchers
+pitcher_id_name_select = st.selectbox('Select Pitcher', sorted(pitcher_name_id_id.keys()))
 
-pitcher_id_name = dict(zip(df_plot['pitcher_id'],df_plot['pitcher_name']))
-pitcher_id_name_id = dict(zip(df_plot['pitcher_id'],df_plot['pitcher_name']+ ' - '+df_plot['pitcher_id']))
-pitcher_name_id_id = dict(zip(df_plot['pitcher_name']+ ' - '+df_plot['pitcher_id'],df_plot['pitcher_id']))
-pitcher_id_position = dict(zip(df_plot['pitcher_id'],df_plot.drop_nulls(subset=['position'])['position']))
-
-
-
-# Create a multiselect widget for pitch types
-pitcher_id_name_select = st.selectbox('Select Pitcher', sorted([x for x in pitcher_name_id_id]))
-
+# Get selected pitcher information
 pitcher_id = pitcher_name_id_id[pitcher_id_name_select]
-# Define pitcher ID and position
 position = pitcher_id_position[pitcher_id]
 pitcher_name = pitcher_id_name[pitcher_id]
 

@@ -55,7 +55,10 @@ dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours]
 
 
 
-def tjstuff_plot(df:pl.DataFrame, pitcher_id:int,position:str):
+def tjstuff_plot(df:pl.DataFrame, 
+                 pitcher_id:int,
+                 position:str,
+                 pitcher_name:str):
 
     # Create the figure and GridSpec layout
     fig = plt.figure(figsize=(10, 8), dpi=450)
@@ -184,7 +187,7 @@ def tjstuff_plot(df:pl.DataFrame, pitcher_id:int,position:str):
     ax1_bot.text(s='By: @TJStats', x=0, y=1, fontsize=12, ha='left')
     ax1_bot.text(s='Data: MLB', x=1, y=1, fontsize=12, ha='right')
 
-    ax1_top.text(0.5, 0, f'{pitcher_dict[pitcher_id]} tjStuff+ 2024 Season - {position}',
+    ax1_top.text(0.5, 0, f'{pitcher_name} tjStuff+ 2024 Season - {position}',
                 fontsize=24, ha='center', va='top')
 
     ax2.text(x=0.5, y=0.6, s='tjStuff+ calculates the Expected Run Value (xRV) of a pitch regardless of type\n'

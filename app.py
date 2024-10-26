@@ -7,6 +7,53 @@ from datetime import date
 import pandas as pd
 import matplotlib
 
+
+# For help with plotting the pitch data, we will use the following dictionary to map pitch types to their corresponding colours
+### PITCH COLOURS ###
+pitch_colours = {
+    ## Fastballs ##
+    'FF': {'colour': '#FF007D', 'name': '4-Seam Fastball'},
+    'FA': {'colour': '#FF007D', 'name': 'Fastball'},
+    'SI': {'colour': '#98165D', 'name': 'Sinker'},
+    'FC': {'colour': '#BE5FA0', 'name': 'Cutter'},
+
+    ## Offspeed ##
+    'CH': {'colour': '#F79E70', 'name': 'Changeup'},
+    'FS': {'colour': '#FE6100', 'name': 'Splitter'},
+    'SC': {'colour': '#F08223', 'name': 'Screwball'},
+    'FO': {'colour': '#FFB000', 'name': 'Forkball'},
+
+    ## Sliders ##
+    'SL': {'colour': '#67E18D', 'name': 'Slider'},
+    'ST': {'colour': '#1BB999', 'name': 'Sweeper'},
+    'SV': {'colour': '#376748', 'name': 'Slurve'},
+
+    ## Curveballs ##
+    'KC': {'colour': '#311D8B', 'name': 'Knuckle Curve'},
+    'CU': {'colour': '#3025CE', 'name': 'Curveball'},
+    'CS': {'colour': '#274BFC', 'name': 'Slow Curve'},
+    'EP': {'colour': '#648FFF', 'name': 'Eephus'},
+
+    ## Others ##
+    'KN': {'colour': '#867A08', 'name': 'Knuckleball'},
+    'PO': {'colour': '#472C30', 'name': 'Pitch Out'},
+    'UN': {'colour': '#9C8975', 'name': 'Unknown'},
+}
+
+# Create a dictionary mapping pitch types to their colors
+dict_colour = dict(zip(pitch_colours.keys(), [pitch_colours[key]['colour'] for key in pitch_colours]))
+
+# Create a dictionary mapping pitch types to their colors
+dict_pitch = dict(zip(pitch_colours.keys(), [pitch_colours[key]['name'] for key in pitch_colours]))
+
+# Create a dictionary mapping pitch types to their colors
+dict_pitch_desc_type = dict(zip([pitch_colours[key]['name'] for key in pitch_colours],pitch_colours.keys()))
+
+
+# Create a dictionary mapping pitch types to their colors
+dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours], 
+                           [pitch_colours[key]['colour'] for key in pitch_colours]))
+
 # Define a custom colormap for styling
 cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF','#FFFFFF','#FFB000',])
 
@@ -34,16 +81,18 @@ column_config_dict = {
 }
 
 
-# Get unique pitch types for multiselection
+# Get unique pitch types for selection
 unique_pitch_types = ['']+sorted(df['pitch_type'].unique().to_list())
+unique_pitch_types = [dict_pitch(x) if x in dict_pitch else x for x in unique_pitch_types]
 
 # Create a multiselect widget for pitch types
 selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types != '':
-    df = df.filter(pl.col('pitch_type')==selected_pitch_types).sort('tj_stuff_plus', descending=True)
-
+    df = df.filter(pl.col('pitch_type')==dict_pitch_desc_type(selected_pitch_types)).sort('tj_stuff_plus', descending=True)
+if selected_pitch_types == 'All':
+    df = df.filter(pl.col('pitch_type')=='All').sort('tj_stuff_plus', descending=True)
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling
 styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff_plus', 'pitch_grade']].to_pandas().style

@@ -55,6 +55,9 @@ dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours]
 
 
 
+required_pitch_types = ['All', 'FF', 'SI', 'FC', 'CH', 'FS','FO','SC','SL', 
+                        'ST','SV' ,'CU', 'KC','KN']
+
 
 def tjstuff_plot(df:pl.DataFrame, 
                  pitcher_id:int,
@@ -86,7 +89,7 @@ def tjstuff_plot(df:pl.DataFrame,
 
     # Get unique pitch types for the pitcher
     pitcher_pitches = pitcher_df['pitch_type'].unique()
-    # pitcher_pitches = [x for x in required_pitch_types if x in pitcher_pitches]
+    pitcher_pitches = [x for x in required_pitch_types if x in pitcher_pitches]
 
     # Plot tjStuff+ with swarmplot for all players in the same position
     sns.swarmplot(data=df[(df['pitches'] >= 10) &

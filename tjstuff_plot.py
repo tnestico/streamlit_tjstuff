@@ -41,7 +41,7 @@ pitch_colours = {
 
 # Create a dictionary mapping pitch types to their colors
 dict_colour = dict(zip(pitch_colours.keys(), [pitch_colours[key]['colour'] for key in pitch_colours]))
-
+dict_colour.update({'All': '#808080'})
 # Create a dictionary mapping pitch types to their colors
 dict_pitch = dict(zip(pitch_colours.keys(), [pitch_colours[key]['name'] for key in pitch_colours]))
 
@@ -62,7 +62,7 @@ def tjstuff_plot(df:pl.DataFrame,
                  pitcher_name:str):
 
     # Create the figure and GridSpec layout
-    fig = plt.figure(figsize=(10, 8), dpi=450)
+    fig = plt.figure(figsize=(10, 8), dpi=300)
     gs = GridSpec(5, 3, height_ratios=[0.1, 10, 10, 2, 0.1], width_ratios=[1, 100, 1])
     gs.update(hspace=0.4, wspace=0.1)
 
@@ -76,7 +76,7 @@ def tjstuff_plot(df:pl.DataFrame,
     ax2 = fig.add_subplot(gs[3, 1])
 
     # Update color dictionary
-    dict_colour.update({'All': '#808080'})
+    
 
  
     df = df.to_pandas()

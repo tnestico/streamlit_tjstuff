@@ -64,7 +64,7 @@ def tjstuff_plot(df:pl.DataFrame,
                  pitcher_id:int,
                  position:str,
                  pitcher_name:str):
-
+    sns.set_style("darkgrid")
     # Create the figure and GridSpec layout
     fig = plt.figure(figsize=(10, 8), dpi=450)
     gs = GridSpec(5, 3, height_ratios=[0.1, 10, 10, 2, 0.1], width_ratios=[1, 100, 1])

@@ -46,10 +46,6 @@ unique_pitch_types = df['pitch_type'].unique().to_list()
 
 selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types)
 
-# Create a multiselect widget for pitch types
-if 'selected_pitch_types' not in st.session_state:
-    st.session_state.selected_pitch_types = unique_pitch_types
-
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types:
     df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))

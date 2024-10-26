@@ -83,7 +83,7 @@ column_config_dict = {
 
 # Get unique pitch types for selection
 unique_pitch_types = ['']+sorted(df['pitch_type'].unique().to_list())
-unique_pitch_types = [dict_pitch(x) if x in dict_pitch else x for x in unique_pitch_types]
+unique_pitch_types = [dict_pitch[x] if x in dict_pitch else x for x in unique_pitch_types]
 
 # Create a multiselect widget for pitch types
 selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)

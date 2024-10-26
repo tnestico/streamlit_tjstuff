@@ -107,6 +107,13 @@ column_config_dict = {
 unique_pitch_types = [''] + sorted(df['pitch_type'].unique().to_list())
 unique_pitch_types = [dict_pitch.get(x, x) for x in unique_pitch_types]
 
+
+st.markdown("""
+#### tjStuff+ Table
+
+Filter and sort tjStuff+ Data for all MLB Pitchers
+"""
+           )
 # Create a selectbox widget for pitch types
 selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 
@@ -123,12 +130,6 @@ styled_df = df[['pitcher_id', 'pitcher_name', 'pitch_type', 'pitches', 'tj_stuff
 styled_df = styled_df.background_gradient(subset=['tj_stuff_plus'], cmap=cmap_sum, vmin=80, vmax=120)
 styled_df = styled_df.background_gradient(subset=['pitch_grade'], cmap=cmap_sum, vmin=20, vmax=80)
 
-st.markdown("""
-#### tjStuff+ Table
-
-Filter and sort tjStuff+ Data for all MLB Pitchers
-"""
-           )
 # Display the styled DataFrame in Streamlit
 st.dataframe(styled_df, hide_index=True, column_config=column_config_dict, width=1500)
 

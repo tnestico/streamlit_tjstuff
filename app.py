@@ -42,7 +42,7 @@ selected_pitch_types = st.selectbox('Select Pitch Types', unique_pitch_types)
 
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types:
-    df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))
+    df = df.filter(pl.col('pitch_type')==selected_pitch_types)
 
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling

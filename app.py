@@ -119,7 +119,7 @@ pitcher_id_position = dict(zip(df_plot['pitcher_id'],df_plot.drop_nulls(subset=[
 
 
 # Create a multiselect widget for pitch types
-pitcher_id_name_select = st.selectbox('Select Pitcher', [x for x in pitcher_name_id_id])
+pitcher_id_name_select = st.selectbox('Select Pitcher', sorted([x for x in pitcher_name_id_id]))
 
 pitcher_id = pitcher_name_id_id[pitcher_id_name_select]
 # Define pitcher ID and position

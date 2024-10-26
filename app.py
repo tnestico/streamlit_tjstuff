@@ -106,8 +106,8 @@ st.dataframe(styled_df, hide_index=True, column_config=column_config_dict, width
 
 # Create dictionaries for pitcher information
 pitcher_id_name = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name']))
-pitcher_id_name_id = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'].astype(str)))
-pitcher_name_id_id = dict(zip(df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'].astype(str), df_plot['pitcher_id']))
+pitcher_id_name_id = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id']))
+pitcher_name_id_id = dict(zip(df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'], df_plot['pitcher_id']))
 pitcher_id_position = dict(zip(df_plot['pitcher_id'], df_plot.drop_nulls(subset=['position'])['position']))
 
 # Create a selectbox widget for pitchers

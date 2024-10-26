@@ -66,7 +66,7 @@ def tjstuff_plot(df:pl.DataFrame,
                  pitcher_name:str):
 
     # Create the figure and GridSpec layout
-    fig = plt.figure(figsize=(10, 8), dpi=300)
+    fig = plt.figure(figsize=(10, 8), dpi=450)
     gs = GridSpec(5, 3, height_ratios=[0.1, 10, 10, 2, 0.1], width_ratios=[1, 100, 1])
     gs.update(hspace=0.4, wspace=0.1)
 

@@ -46,8 +46,8 @@ unique_pitch_types = df['pitch_type'].unique().to_list()
 
 selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types)
 
-
-df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))
+if len(selected_pitch_types) > 0:
+    df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))
 #st.session_state.selected_pitch_types = selected_pitch_types
 
 # Convert Polars DataFrame to Pandas DataFrame and apply styling

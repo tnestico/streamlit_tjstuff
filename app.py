@@ -47,10 +47,6 @@ if 'selected_pitch_types' not in st.session_state:
 
 selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types, default='')
 
-# Initialize session state for cache status
-if 'cache_cleared' not in st.session_state:
-    st.session_state.cache_cleared = False
-
 # Filter the DataFrame based on selected pitch types
 if selected_pitch_types:
     df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))

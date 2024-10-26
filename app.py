@@ -12,8 +12,8 @@ cmap_sum = matplotlib.colors.LinearSegmentedColormap.from_list("", ['#648FFF','#
 
 # Load data from CSV file and preprocess it
 df = pl.read_csv("tjstuff_plus_pitch_data_2024.csv").fill_nan(None)
-df = df.filter(df['pitches'] >= 10).drop_nulls(subset=['pitch_grade', 'tj_stuff_plus'])
-df = df.sort(['pitcher_name', 'pitch_type'], descending=[False, False])
+df = df.filter(df['pitches']>=10).drop_nulls(subset=['pitch_grade','tj_stuff_plus'])
+df = df.sort(['pitcher_name','pitch_type'], descending=[False,False])
 
 # Cast columns to appropriate data types
 df = df.with_columns([
@@ -22,6 +22,11 @@ df = df.with_columns([
     pl.col('pitcher_id').cast(pl.Int64).alias('pitcher_id'),
     pl.col('pitch_grade').cast(pl.Int64).alias('pitch_grade')
 ])
+
+
+# Drop rows with NaN values and sort the DataFrame
+df = df.drop_nulls(subset=['pitch_grade', 'tj_stuff_plus'])
+df = df.sort(['pitcher_name', 'pitch_type'], descending=[False, False])
 
 # Define column configuration
 column_config_dict = {
@@ -36,15 +41,17 @@ column_config_dict = {
 # Get unique pitch types for multiselection
 unique_pitch_types = df['pitch_type'].unique().to_list()
 
-
-
-# Create a multiselect widget for pitch types with no default selection
-selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types, default=st.session_state.get('selected_pitch_types', []))
 # Create a multiselect widget for pitch types
 if 'selected_pitch_types' not in st.session_state:
     st.session_state.selected_pitch_types = unique_pitch_types
 
-# Filter the DataFrame based on selected pitch types if at least one is selected
+selected_pitch_types = st.multiselect('Select Pitch Types', unique_pitch_types, default='')
+
+# Initialize session state for cache status
+if 'cache_cleared' not in st.session_state:
+    st.session_state.cache_cleared = False
+
+# Filter the DataFrame based on selected pitch types
 if selected_pitch_types:
     df = df.filter(pl.col('pitch_type').is_in(selected_pitch_types))
     st.session_state.selected_pitch_types = selected_pitch_types

@@ -57,7 +57,8 @@ dict_pitch_name = dict(zip([pitch_colours[key]['name'] for key in pitch_colours]
 
 required_pitch_types = ['All', 'FF', 'SI', 'FC', 'CH', 'FS','FO','SC','SL', 
                         'ST','SV' ,'CU', 'KC','KN']
-
+# Create a mapping dictionary from the list
+custom_order_dict = {pitch: index for index, pitch in enumerate(required_pitch_types)}
 
 def tjstuff_plot(df:pl.DataFrame, 
                  pitcher_id:int,
@@ -86,11 +87,21 @@ def tjstuff_plot(df:pl.DataFrame,
     # Filter data for the specific pitcher
     pitcher_df = df[(df['pitcher_id'] == pitcher_id) &
                                     (df['pitches'] >= 10)]
+    
 
+    
+    # Add a new column for the custom order
+    pitcher_df = pitcher_df.with_column(
+        pitcher_df['pitch_type'].map_elements(lambda x: custom_order_dict[x]).alias('order')
+    )
+    pitcher_df = pitcher_df.sort('order')
+                         
     # Get unique pitch types for the pitcher
     pitcher_pitches = pitcher_df['pitch_type'].unique()
     pitcher_pitches = [x for x in required_pitch_types if x in pitcher_pitches]
 
+
+                     
     # Plot tjStuff+ with swarmplot for all players in the same position
     sns.swarmplot(data=df[(df['pitches'] >= 10) &
                                             (df['position'] == position)].dropna(subset=['pitch_type']),

@@ -78,7 +78,7 @@ def tjstuff_plot(df:pl.DataFrame,
     dict_colour.update({'All': '#808080'})
 
  
-
+    df = df.to_pandas()
     # Filter data for the specific pitcher
     pitcher_df = df[(df['pitcher_id'] == pitcher_id) &
                                     (df['pitches'] >= 10)]

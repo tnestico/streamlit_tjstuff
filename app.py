@@ -139,6 +139,14 @@ pitcher_id_name_id = dict(zip(df_plot['pitcher_id'], df_plot['pitcher_name'] + '
 pitcher_name_id_id = dict(zip(df_plot['pitcher_name'] + ' - ' + df_plot['pitcher_id'], df_plot['pitcher_id']))
 pitcher_id_position = dict(zip(df_plot['pitcher_id'], df_plot.drop_nulls(subset=['position'])['position']))
 
+
+st.markdown("""
+#### tjStuff+ Plot
+
+Visualize tjStuff+ and Pitching Grade by Pitcher
+"""
+           )
+
 # Create a selectbox widget for pitchers
 pitcher_id_name_select = st.selectbox('Select Pitcher', sorted(pitcher_name_id_id.keys()))
 

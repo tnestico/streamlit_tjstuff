@@ -91,7 +91,7 @@ def tjstuff_plot(df:pl.DataFrame,
 
     
     # Add a new column for the custom order
-    pitcher_df = pitcher_df.with_column(
+    pitcher_df = pitcher_df.with_columns(
         pitcher_df['pitch_type'].map_elements(lambda x: custom_order_dict[x]).alias('order')
     )
     pitcher_df = pitcher_df.sort('order')

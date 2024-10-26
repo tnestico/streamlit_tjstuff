@@ -7,6 +7,32 @@ from datetime import date
 import pandas as pd
 import matplotlib
 
+
+
+# Display the app title and description
+st.markdown("""
+## tjStuff+ App
+
+##### By: Thomas Nestico ([@TJStats](https://x.com/TJStats))
+##### Code: [GitHub Repo](https://github.com/tnestico/streamlit_tjstuff)
+##### Data: [MLB](https://baseballsavant.mlb.com/) ([Gathered from my MLB Scraper](https://github.com/tnestico/mlb_scraper))
+
+#### About
+This Streamlit app tabulates and plots my pitching metric, tjStuff+, for all MLB players during the 2024 MLB Season
+
+About tjStuff+:
+* tjStuff+ calculates the Expected Run Value (xRV) of a pitch regardless of type
+* tjStuff+ is normally distributed, where 100 is the mean and Standard Deviation is 10
+* Pitch Grade is based off tjStuff+ and scales the data to the traditional 20-80 Scouting Scale for a given pitch type'
+                            
+
+
+*More information about the data and plots is shown at the bottom of this page.*
+
+"""
+)
+
+
 # Dictionary to map pitch types to their corresponding colors and names
 pitch_colours = {
     ## Fastballs ##

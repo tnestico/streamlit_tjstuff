@@ -156,24 +156,9 @@ position = pitcher_id_position[pitcher_id]
 pitcher_name = pitcher_id_name[pitcher_id]
 
 import tjstuff_plot
-
-# Initialize session state for plot data if it doesn't exist
-if "plot_data" not in st.session_state:
+# Button to update plot
+if st.button('Update Plot'):
+    df = fetch_data()
     st.session_state.update_plot = True
     tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)
 
-# Define a function to update the plot data
-def update_plot():
-    st.session_state.update_plot = True
-    tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)
-
-# Button to update the plot
-if st.button("Update Plot"):
-    update_plot()
-
-
-# # Button to update plot
-# if st.button('Update Plot'):
-#     df = fetch_data()
-#     st.session_state.update_plot = True
-#     tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)

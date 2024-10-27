@@ -159,5 +159,6 @@ import tjstuff_plot
 
 # Button to update plot
 if st.button('Update Plot'):
+    df = fetch_data()
     st.session_state.update_plot = True
     tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)

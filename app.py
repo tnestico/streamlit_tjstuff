@@ -24,6 +24,8 @@ About tjStuff+:
 * tjStuff+ calculates the Expected Run Value (xRV) of a pitch regardless of type
 * tjStuff+ is normally distributed, where 100 is the mean and Standard Deviation is 10
 * Pitch Grade is based off tjStuff+ and scales the data to the traditional 20-80 Scouting Scale for a given pitch type
+
+[Learn More about tjStuff+ here](https://github.com/tnestico/tjstuff_plus/tree/main)
                             
 """
 )

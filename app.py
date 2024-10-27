@@ -157,8 +157,16 @@ pitcher_name = pitcher_id_name[pitcher_id]
 
 import tjstuff_plot
 # Button to update plot
+
+# Get selected pitcher information
+pitcher_id = pitcher_name_id_id[pitcher_id_name_select]
+position = pitcher_id_position[pitcher_id]
+pitcher_name = pitcher_id_name[pitcher_id]
+
+import tjstuff_plot
+
+# Button to update plot
 if st.button('Update Plot'):
-    df = fetch_data()
     st.session_state.update_plot = True
     tjstuff_plot.tjstuff_plot(df_plot, pitcher_id, position, pitcher_name)
 
